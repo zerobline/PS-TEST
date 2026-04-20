@@ -1,0 +1,16 @@
+{
+  "name": "patents-scanner",
+  "version": "1.0.0",
+  "description": "Weekly Google Patents abstract scraper",
+  "main": "scripts/scrape.js",
+  "scripts": {
+    "scrape": "node scripts/scrape.js",
+    "test":   "node scripts/scrape.js"
+  },
+  "dependencies": {
+    "playwright": "^1.43.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

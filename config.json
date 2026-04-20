@@ -1,0 +1,77 @@
+{
+  "_note": "Each query entry is a string or {query, maxPages} object. recentDays auto-sets the date window on every run. Edit queries here to change what gets monitored.",
+
+  "queries": [
+    {
+      "_label": "Coffee/espresso extraction methods",
+      "query": "CPC=A23F5/08 AND AB=((coffee OR espresso) AND (extraction OR brewing))",
+      "maxPages": 2
+    },
+    {
+      "_label": "Coffee extraction + process control",
+      "query": "CPC=A23F5/08 AND CPC=G05B AND AB=((coffee OR espresso) AND (control OR flow OR pressure OR temperature))",
+      "maxPages": 2
+    },
+    {
+      "_label": "Coffee extraction + measurement/sensors",
+      "query": "CPC=A23F5/08 AND CPC=G01N AND AB=((coffee OR espresso) AND (measurement OR sensor OR concentration OR TDS))",
+      "maxPages": 2
+    },
+    {
+      "_label": "Coffee extraction + ML/optimization",
+      "query": "CPC=A23F5/08 AND CPC=G06N AND AB=((coffee OR espresso) AND (optimization OR adaptive OR model OR prediction))",
+      "maxPages": 2
+    },
+    {
+      "_label": "Coffee machines + connected/control systems",
+      "query": "CPC=A47J31 AND (CPC=G05B OR CPC=H04L) AND AB=((coffee OR espresso) AND (control OR system OR connected OR network))",
+      "maxPages": 2
+    },
+    {
+      "_label": "Coffee machines + sensors/quality",
+      "query": "CPC=A47J31 AND CPC=G01N AND AB=((coffee OR espresso) AND (sensor OR detection OR quality OR measurement))",
+      "maxPages": 2
+    },
+    {
+      "_label": "Milk frothing systems",
+      "query": "CPC=A47J31/44 AND AB=(milk AND (foam OR froth OR system OR cleaning))",
+      "maxPages": 2
+    },
+    {
+      "_label": "Coffee equipment cleaning/hygiene",
+      "query": "CPC=A47L AND AB=((coffee OR espresso) AND (cleaning OR hygiene OR maintenance))",
+      "maxPages": 2
+    },
+    {
+      "_label": "Coffee grinders + control/sensing",
+      "query": "CPC=A47J42 AND (CPC=G05B OR CPC=G01N) AND AB=((coffee OR espresso) AND (grind OR grinding OR particle OR adjustment))",
+      "maxPages": 2
+    },
+    {
+      "_label": "Coffee roasting + control/profiling",
+      "query": "CPC=A23F5/04 AND (CPC=G05B OR CPC=G01N) AND AB=((coffee OR espresso) AND (roast OR roasting OR temperature OR profile))",
+      "maxPages": 2
+    },
+    {
+      "_label": "Milk/coffee packaging",
+      "query": "CPC=B65D AND AB=((milk OR coffee) AND (bag OR container OR package OR dispensing))",
+      "maxPages": 2
+    },
+    {
+      "_label": "Broad coffee/espresso systems catch-all",
+      "query": "(CPC=A23F OR CPC=A47J31) AND AB=((coffee OR espresso) AND (system OR method OR apparatus))",
+      "maxPages": 2
+    }
+  ],
+
+  "recentDays":   7,
+  "maxPages":     2,
+
+  "afterDate":    "",
+  "beforeDate":   "",
+  "type":         "PATENT",
+  "status":       "",
+
+  "fetchDelayMs": 1500,
+  "pageDelayMs":  3000
+}
