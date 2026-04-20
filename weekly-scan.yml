@@ -1,0 +1,65 @@
+name: Weekly Patent Scan
+
+on:
+  schedule:
+    - cron: "0 8 * * 1"  # Every Monday 08:00 UTC
+
+  workflow_dispatch:
+    inputs:
+      query:
+        description: "Single query override (leave blank to run all queries from config.json)"
+        required: false
+        default: ""
+      max_pages:
+        description: "Max pages per query"
+        required: false
+        default: "2"
+      recent_days:
+        description: "Only fetch patents from last N days"
+        required: false
+        default: "7"
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Playwright browsers
+        run: npx playwright install chromium --with-deps
+
+      - name: Run patent scraper
+        env:
+          PATENTS_QUERY:       ${{ github.event.inputs.query }}
+          PATENTS_MAX_PAGES:   ${{ github.event.inputs.max_pages || '2' }}
+          PATENTS_RECENT_DAYS: ${{ github.event.inputs.recent_days || '7' }}
+          GMAIL_ADDRESS:       ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_APP_PASSWORD:  ${{ secrets.GMAIL_APP_PASSWORD }}
+          EMAIL_RECIPIENT:     ${{ secrets.EMAIL_RECIPIENT }}
+        run: node scripts/scrape.js
+
+      - name: Commit results
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add results/ delta/
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M UTC")
+            COUNT=$(node -e "const d = require('./results/patents.json'); console.log(d.total);")
+            git commit -m "chore: patent scan ${TIMESTAMP} (${COUNT} total)"
+            git push
+          fi
